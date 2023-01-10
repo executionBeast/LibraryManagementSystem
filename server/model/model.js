@@ -6,27 +6,27 @@ const bookBorrowSchema = new mongoose.Schema({
         required:true
     },
 
-    Branch:{
+    branch:{
         type:String,
         required:true
     },
 
-    Session:{
+    session:{
         type:String,
         required:true
     },
     
-    BookName:{
+    book:{
         type:String,
         required:true,
     },
 
-    BookID:{
+    book_id:{
         type:String,
         required:true,
     },
 
-    IssueDate:{
+    issue_date:{
         type:String,
         required:true
     }

@@ -5,17 +5,17 @@ const controller = require('../controller/controller');
 
 route.get('/', renderr.show_books);  //renderr = render.js  //
 
-route.get('/add_user',renderr.borrow_books);  //enter borrow books 
+route.get('/issue-new-books',renderr.issue_new_books);  //enter borrow books 
 
-route.get('/update-user',renderr.update_user);
+route.get('/update-books',renderr.update_books);
 
 
 
 //api routes 
-route.post('/api/borrowedbooks/',controller.create); //working data creation 
-route.get('/api/borrowedbook/',controller.find);  //working fetch all users data
-route.put('/api/borrowedbook/:id',controller.update);  // '/api/borrowedbook/${id}'  id in borrowed book data
-route.delete('/api/borrowedbook/:id',controller.delete);
+route.post('/api/issue-books/',controller.create);
+route.get('/api/get-issued-books/',controller.find);  //WORKING fetch all users data
+route.put('/api/update-issued-books/:id',controller.update);  // '/api/borrowedbook/${id}'  id in borrowed book data
+route.delete('/api/delete-issued-books/:id',controller.delete);
 
 //ager api route pe delete req aayi to contro.delete fn ko run  karo
 

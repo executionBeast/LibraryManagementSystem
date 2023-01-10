@@ -1,23 +1,34 @@
-var Userdb = require('../model/model').module;
+var librarydbs = require('../model/model').module;
 
-exports.create = (req,res)=>{                       //working
-    if(!req.body){
+exports.create = (req,res)=>{                    
+    if(!req.body){          //form data of issuing books
         res.status(400).send({message:"Content body can't be empty!"})
         return;
-    }//agr empty hua to return; ho jaayega then execution of create khatam
+    }
+    // console.log(req.body.name)
+    // console.log(req.body.branch)
+    // console.log(req.body.session)
+    // console.log(req.body.book)
+    // console.log(req.body.book_id)
+    // console.log(req.body.issue_date)
+    //agr empty hua to return; ho jaayega then execution of create khatam
     //we got data then
-    const user = new Userdb({ 
+    const issueData = new librarydbs({     //instance of libraryds class 
         name:req.body.name,
-        email:req.body.email,
-        gender:req.body.gender,
-        status:req.body.status
-    })
+        branch:req.body.branch,
+        session:req.body.session,
+        book:req.body.book,
+        book_id:req.body.book_id,
+        issue_date:req.body.issue_date
+
+    });
     //now save it catch error send response
-    user
-        .save(user)
+    issueData
+        .save()     //session.inTransaction is not a function-> this error was caused because I was saving issueData and
+                    //.save(issueData)  passing in issueData that is not a ClientSession as a session into some operation(.save())
         .then(data=>{
-            // res.send(data)
-            res.redirect('/add_user')
+            res.send(data)
+            // res.redirect('/add_user')
         })  //if this promise return error then catch
         .catch(err=>{
             res.status(500).send({errmessage:err.message||"Some Error Occurred!"})
@@ -27,7 +38,7 @@ exports.create = (req,res)=>{                       //working
 
 }
 
-exports.find = (req,res)=>{                   //working
+exports.find = (req,res)=>{                  //working
     if(!req.body){
         res.status(400).send({
             message:"Error Finding user with ID!"
@@ -36,7 +47,7 @@ exports.find = (req,res)=>{                   //working
         }
     const id=req.query.id
     if(!id){
-        Userdb.find()  
+        librarydbs.find()  
             .then(data=>{
                 res.send(data)
             })
@@ -44,7 +55,7 @@ exports.find = (req,res)=>{                   //working
                 res.status(500).send({errmessage:"Some Error occurred"})
             })
     }else{
-        Userdb.findById(id)
+        librarydbs.findById(id)
             .then(data=>{
                 res.send(data)
             })
@@ -55,7 +66,7 @@ exports.find = (req,res)=>{                   //working
 
 }
 
-exports.update = (req,res)=>{                              //working
+exports.update = (req,res)=>{                             
     if(!req.body){
         res.status(400).send({
             message:"Wrong Input"
@@ -74,7 +85,7 @@ exports.update = (req,res)=>{                              //working
         })
 }
 
-exports.delete = (req,res)=>{                              //working
+exports.delete = (req,res)=>{                          
     if(!req.body){
         res.status(400).send({
             message:"Wrong Input"
