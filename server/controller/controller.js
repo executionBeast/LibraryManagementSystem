@@ -27,8 +27,8 @@ exports.create = (req,res)=>{
         .save()     //session.inTransaction is not a function-> this error was caused because I was saving issueData and
                     //.save(issueData)  passing in issueData that is not a ClientSession as a session into some operation(.save())
         .then(data=>{
-            res.send(data)
-            // res.redirect('/add_user')
+            // res.send(data)
+            res.redirect('/issue-new-books')
         })  //if this promise return error then catch
         .catch(err=>{
             res.status(500).send({errmessage:err.message||"Some Error Occurred!"})
